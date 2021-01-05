@@ -7,6 +7,7 @@ public class BaseballGame {
     public static void main(String[] args) {
         BaseballGame game = new BaseballGame();
         String[] ops = {"5", "-2", "4", "C", "D", "9", "+", "+"};
+        System.out.println(game.try01(ops));
         System.out.println(game.calculateScore(ops));
         System.out.println(game.calculateScore02(ops));
         System.out.println(game.calculateScore03(ops));
@@ -81,6 +82,35 @@ public class BaseballGame {
                     break;
             }
         }
+        return s;
+    }
+
+    public int try01(String[] ops) {
+        int s = 0;
+        int cp = -1;
+        int[] tempArray = new int[ops.length];
+        for (String op : ops) {
+            switch (op.charAt(0)) {
+                case '+':
+                    tempArray[++cp] = tempArray[cp - 2] + tempArray[cp - 1];
+                    s = s + tempArray[cp];
+                    break;
+                case 'C':
+                    s = s - tempArray[cp];
+                    tempArray[cp] = 0;
+                    cp--;
+                    break;
+                case 'D':
+                    tempArray[++cp] = 2 * tempArray[cp - 1];
+                    s = s + tempArray[cp];
+                    break;
+                default:
+                    tempArray[++cp] = Integer.parseInt(op);
+                    s = s + tempArray[cp];
+                    break;
+            }
+        }
+
         return s;
     }
 }
